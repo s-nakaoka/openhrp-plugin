@@ -108,10 +108,10 @@ foreach(version ${versions})
 
 endforeach()
 
-if(ENABLE_PYTHON)
-  if(USE_PYBIND11)
-    add_subdirectory(pybind11)
-  elseif(USE_BOOST_PYTHON)
-    add_subdirectory(boostpython)
-  endif()
+if(ENABLE_PYTHON AND USE_PYBIND11)
+  add_subdirectory(pybind11)
+elseif(BUILD_BOOST_PYTHON_MODULES)
+  add_subdirectory(boostpython)
 endif()
+
+add_subdirectory(sample)
