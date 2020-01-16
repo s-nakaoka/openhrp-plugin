@@ -9,6 +9,7 @@
 #include <cnoid/MessageView>
 #include <cnoid/Archive>
 #include <cnoid/Sleep>
+#include <cnoid/PutPropertyFunction>
 #include <boost/filesystem.hpp>
 #include <fmt/format.h>
 #include <iostream>
@@ -237,9 +238,9 @@ void OpenHRPControllerItem::doPutProperties(PutPropertyFunction& putProperty)
     ControllerItem::doPutProperties(putProperty);
     
     putProperty(_("Controller server name"), controllerServerName,
-                std::bind(&OpenHRPControllerItem::setControllerServerName, this, _1), true);
+            [&](const string& name){ setControllerServerName(name); return true; });
     putProperty(_("Controller server command"), controllerServerCommand,
-                std::bind(&OpenHRPControllerItem::setControllerServerCommand, this, _1), true);
+            [&](const string& command){ setControllerServerCommand(command); return true; });
 }
 
 

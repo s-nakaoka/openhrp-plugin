@@ -10,6 +10,7 @@
 #include <cnoid/OpenRTMUtil>
 #include <cnoid/LazyCaller>
 #include <cnoid/ScriptItem>
+#include <cnoid/PutPropertyFunction>
 #include <rtm/DataFlowComponentBase.h>
 #include <rtm/CorbaPort.h>
 #include <fmt/format.h>
@@ -256,7 +257,7 @@ void OpenHRPInterpreterServiceItem::onDisconnectedFromRoot()
 void OpenHRPInterpreterServiceItem::doPutProperties(PutPropertyFunction& putProperty)
 {
     putProperty(_("RTC Instance name"), impl->rtcInstanceName,
-                std::bind(&ItemImpl::setRTCinstanceName, impl, _1), true);
+            [&](const string& name){ impl->setRTCinstanceName(name); return true; });
     putProperty(_("Force main thread execution"), impl->forceMainThreadExecution,
                 changeProperty(impl->forceMainThreadExecution));
     putProperty(_("Put script text to interpret"), impl->doPutScriptTextToInterpret,
