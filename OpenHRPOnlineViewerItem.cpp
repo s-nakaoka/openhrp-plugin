@@ -26,6 +26,7 @@
 #include <cnoid/SceneCollision>
 #include <cnoid/CollisionSeqItem>
 #include <cnoid/CollisionSeq>
+#include <cnoid/PutPropertyFunction>
 #include <fmt/format.h>
 #include <QRegExp>
 #include <sstream>
@@ -244,7 +245,7 @@ void OpenHRPOnlineViewerItem::onDisconnectedFromRoot()
 void OpenHRPOnlineViewerItem::doPutProperties(PutPropertyFunction& putProperty)
 {
     putProperty(_("Server name"), impl->serverName,
-            std::bind(&OpenHRPOnlineViewerItemImpl::setServerName, impl, _1), true);
+            [&](const string& name){ impl->setServerName(name); return true; });
 }
 
 
